@@ -53,7 +53,8 @@ console.log(data.features)
             layer.bindPopup(`<h3>Earthquake Information</h3><hr><p>
                                             Location: ${feature.properties.place}<br><br>
                                             Time: ${new Date(feature.properties.time)}<br><br>
-                                            Magnitude: ${feature.properties.mag}</p>`);
+                                            Magnitude: ${feature.properties.mag}<br><br>
+                                            Depth: ${feature.geometry.coordinates[2]}</p>`);
         }
     }).addTo(myMap);
 
