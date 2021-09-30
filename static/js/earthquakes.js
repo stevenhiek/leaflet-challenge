@@ -1,7 +1,7 @@
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 d3.json(queryUrl).then(function (data) {
-
+console.log(data.features)
     // Map Starting Point
     var myMap = L.map("map", {
         center: [
@@ -16,22 +16,15 @@ d3.json(queryUrl).then(function (data) {
     });
     street.addTo(myMap);
 
-
     // Map Style: Earthquake Color and Radius 
-    function earthquake_color(mag) {
+    function earthquake_color(depth) {
         switch (true) {
-            case mag > 5:
-                return "#ff5f65";
-            case mag > 4:
-                return "#fca35d";
-            case mag > 3:
-                return "#fdb72a";
-            case mag > 2:
-                return "#f7db11";
-            case mag > 1:
-                return "#dcf400";
-            default:
-                return "#a3f600";
+            case depth >= 90: return "#ff5f65";
+            case depth >= 70: return "#fca35d";
+            case depth >= 50: return "#fdb72a";
+            case depth >= 30: return "#f7db11";
+            case depth >= 10: return "#dcf400";
+            case depth <10: return "#a3f600";
         }
     };
 
@@ -51,7 +44,7 @@ d3.json(queryUrl).then(function (data) {
             return {
                 opacity: 1,
                 fillOpacity: 0.8,
-                fillColor: earthquake_color(feature.properties.mag),
+                fillColor: earthquake_color(feature.geometry.coordinates[2]),
                 radius: earthquake_radius(feature.properties.mag),
                 weight: 0.8
             }
