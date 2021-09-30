@@ -1,7 +1,7 @@
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 d3.json(queryUrl).then(function (data) {
-console.log(data.features)
+    console.log(data.features)
     // Map Starting Point
     var myMap = L.map("map", {
         center: [
@@ -24,7 +24,7 @@ console.log(data.features)
             case depth >= 50: return "#fdb72a";
             case depth >= 30: return "#f7db11";
             case depth >= 10: return "#dcf400";
-            case depth <10: return "#a3f600";
+            case depth < 10: return "#a3f600";
         }
     };
 
@@ -51,10 +51,10 @@ console.log(data.features)
         },
         onEachFeature: function (feature, layer) {
             layer.bindPopup(`<h3>Earthquake Information</h3><hr><p>
-                                            Location: ${feature.properties.place}<br><br>
-                                            Time: ${new Date(feature.properties.time)}<br><br>
-                                            Magnitude: ${feature.properties.mag}<br><br>
-                                            Depth: ${feature.geometry.coordinates[2]}</p>`);
+                                Location: ${feature.properties.place}<br><br>
+                                Time: ${new Date(feature.properties.time)}<br><br>
+                                Magnitude: ${feature.properties.mag}<br><br>
+                                Depth: ${feature.geometry.coordinates[2]}</p>`);
         }
     }).addTo(myMap);
 
